@@ -1,4 +1,4 @@
-#include "include/command.hpp"
+#include "command.hpp"
 #include <dpp/dpp.h>
 
 // Example command with one string option

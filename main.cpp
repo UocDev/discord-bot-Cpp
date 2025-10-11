@@ -1,6 +1,6 @@
 // main.cpp
-#include "include/utils.hpp"
-#include "include/command.hpp"
+#include "utils.hpp"
+#include "command.hpp"
 #include <dpp/dpp.h>
 #include <iostream>
 

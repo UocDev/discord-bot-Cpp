@@ -1,4 +1,4 @@
-#include "include/command.hpp"
+#include "command.hpp"
 #include <dpp/dpp.h>
 
 // Static registrar: when register_all_commands(bot) called, this lambda runs
