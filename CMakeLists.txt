@@ -4,23 +4,36 @@ project(discord_cpp_bot LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find D++ (dpp). Make sure dpp is installed on system or provide path.
 find_package(dpp REQUIRED CONFIG)
 
-# Sources
+# Include folder
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 file(GLOB COMMAND_SOURCES "commands/*.cpp")
-set(SRC
+
+# =========================================================
+# BOT EXECUTABLE
+# =========================================================
+add_executable(bot
     main.cpp
+    command_registry.cpp
+    ${COMMAND_SOURCES}
+)
+
+target_link_libraries(bot PRIVATE dpp::dpp)
+
+# =========================================================
+# DEPLOY EXECUTABLE
+# =========================================================
+add_executable(deploy
     deploy.cpp
     command_registry.cpp
     ${COMMAND_SOURCES}
 )
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(deploy PRIVATE dpp::dpp)
 
-add_executable(bot ${SRC})
-# Link dpp once; both deploy and bot are in same binary (entrypoint chosen by main/deploy logic).
-target_link_libraries(bot PRIVATE dpp::dpp)
-
-# Optionally: install target to /usr/local/bin
-# install(TARGETS bot DESTINATION bin)
+# =========================================================
+# OPSIONAL
+# =========================================================
+# install(TARGETS bot deploy DESTINATION bin)
