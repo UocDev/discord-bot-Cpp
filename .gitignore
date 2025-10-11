@@ -39,3 +39,13 @@
 
 # debug information files
 *.dwo
+
+# Ignore token file
+token.txt
+
+# CMake build
+/build
+/CMakeFiles
+/CMakeCache.txt
+/*.cmake
+Makefile
