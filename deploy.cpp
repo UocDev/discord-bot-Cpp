@@ -30,6 +30,6 @@ int main() {
         bot.shutdown();
     });
 
-    bot.start(false); // blocking
+    bot.start(dpp::st_wait); // blocking
     return 0;
 }

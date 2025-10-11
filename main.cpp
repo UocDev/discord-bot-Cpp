@@ -30,6 +30,6 @@ int main() {
     });
 
     std::cout << "[main] Starting bot...\n";
-    bot.start(false); // blocking, non-daemon
+    bot.start(dpp::st_wait); // blocking, non-daemon
     return 0;
 }
