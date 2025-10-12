@@ -3,21 +3,16 @@
 #include <iostream>
 
 void register_hello_command(dpp::cluster& bot) {
-    // Ambil application ID dari bot
     dpp::snowflake app_id = bot.me.id;
 
-    // Buat slash command
     dpp::slashcommand hello_cmd("hello", "Say hello", app_id);
 
-    // Tambahkan optional argument
     hello_cmd.add_option(
         dpp::command_option(dpp::co_string, "name", "Your name", false)
     );
 
-    // Register ke Discord
     bot.global_command_create(hello_cmd);
 
-    // Event handler untuk respon command
     bot.on_slashcommand([](const dpp::slashcommand_t& event) {
         if (event.command.get_command_name() == "hello") {
             std::string name = "there";
@@ -31,3 +26,5 @@ void register_hello_command(dpp::cluster& bot) {
         }
     });
 }
+
+static CommandRegistrar reg_hello = register_command(register_hello_command);

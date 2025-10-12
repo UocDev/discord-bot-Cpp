@@ -31,5 +31,6 @@ int main() {
     });
 
     bot.start(dpp::st_wait); // blocking
+    std::cout << "[Deploy] Clean exit check. \n";
     return 0;
 }
