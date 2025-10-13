@@ -49,3 +49,8 @@ token.txt
 /CMakeCache.txt
 /*.cmake
 Makefile
+
+# random stuff
+/random
+/UocLinux
+
