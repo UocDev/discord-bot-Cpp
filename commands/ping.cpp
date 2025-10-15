@@ -14,7 +14,7 @@ void register_status_command(dpp::cluster& bot) {
     bot.global_command_create(cmd);
 
     bot.on_slashcommand([&bot](const dpp::slashcommand_t& event) {
-        if (event.command.get_command_name() == "status")
+        if (event.command.get_command_name() == "status") {
             auto e = std::make_shared<dpp::slashcommand_t>(event);
 
             double gateway_ping = bot.get_shard(0)->websocket_ping;
@@ -29,7 +29,7 @@ void register_status_command(dpp::cluster& bot) {
                 double http_ping = diff.count();
 
                 if (cb.is_error()) {
-                    e->edit_response(dpp::message("Failed to fetching Bot Connections API datas."));
+                    e->edit_response(dpp::message("Failed to fetching bot API datas."));
                     return;
                 }
 
