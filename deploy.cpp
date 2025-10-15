@@ -26,7 +26,7 @@ int main() {
         register_all_commands(bot);
         // Wait a short moment to ensure REST calls finish
         std::this_thread::sleep_for(std::chrono::seconds(12));
-        std::cout << "[deploy] Configuration all commands. Please wait..."
+        std::cout << "[deploy] Configuration all commands. Please wait...\n";
         std::cout << "[deploy] Done. Shutting down.\n";
         bot.shutdown();
     });
