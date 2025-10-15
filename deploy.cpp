@@ -25,12 +25,13 @@ int main() {
         std::cout << "[deploy] Bot ready. Registering commands...\n";
         register_all_commands(bot);
         // Wait a short moment to ensure REST calls finish
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::this_thread::sleep_for(std::chrono::seconds(12));
+        std::cout << "[deploy] Configuration all commands. Please wait..."
         std::cout << "[deploy] Done. Shutting down.\n";
         bot.shutdown();
     });
 
     bot.start(dpp::st_wait); // blocking
-    std::cout << "[Deploy] Clean exit check. \n";
+    std::cout << "[deploy] Clean exit check. \n";
     return 0;
 }
