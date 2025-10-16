@@ -3,8 +3,12 @@
 #include "command.hpp"
 #include <dpp/dpp.h>
 #include <iostream>
+#include "memoryManager.hpp"
 
 int main() {
+    MemoryManager memory(70);
+    memory.start();
+
     auto token = read_token_file("token.txt");
     if (token.empty()) {
         std::cerr << "token.txt not found or empty. Put your bot token in token.txt (single line).\n";
@@ -31,5 +35,6 @@ int main() {
 
     std::cout << "[main] Starting bot...\n";
     bot.start(dpp::st_wait); // blocking, non-daemon
+    memory.stop();
     return 0;
 }
