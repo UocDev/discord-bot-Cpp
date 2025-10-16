@@ -16,6 +16,7 @@ file(GLOB COMMAND_SOURCES "commands/*.cpp")
 # =========================================================
 add_executable(bot
     main.cpp
+    memoryManager.cpp 
     command_registry.cpp
     ${COMMAND_SOURCES}
 )
@@ -26,6 +27,7 @@ target_link_libraries(bot PRIVATE dpp::dpp)
 # DEPLOY EXECUTABLE
 # =========================================================
 add_executable(deploy
+    memoryManager.cpp
     deploy.cpp
     command_registry.cpp
     ${COMMAND_SOURCES}
