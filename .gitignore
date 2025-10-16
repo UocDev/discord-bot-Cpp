@@ -54,3 +54,5 @@ Makefile
 /random
 /UocLinux
 
+# Logs
+/log
