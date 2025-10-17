@@ -10,11 +10,11 @@ std::string format_latency(double ms) {
 }
 
 void register_status_command(dpp::cluster& bot) {
-    dpp::slashcommand cmd("status", "Check bot connection latency", bot.me.id);
+    dpp::slashcommand cmd("ping", "Check bot connection latency", bot.me.id);
     bot.global_command_create(cmd);
 
     bot.on_slashcommand([&bot](const dpp::slashcommand_t& event) {
-        if (event.command.get_command_name() == "status") {
+        if (event.command.get_command_name() == "ping") {
             auto e = std::make_shared<dpp::slashcommand_t>(event);
 
             double gateway_ping = bot.get_shard(0)->websocket_ping;
@@ -44,6 +44,6 @@ void register_status_command(dpp::cluster& bot) {
 }
 
 static bool reg_status = ([] {
-    register_command(register_status_command);
+    register_command(register_ping_command);
     return true;
 })();
