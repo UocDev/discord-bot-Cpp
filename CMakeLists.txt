@@ -3,6 +3,7 @@ project(discord_cpp_bot LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_COMPILER_LAUNCHER ccache)
 
 find_package(dpp REQUIRED CONFIG)
 

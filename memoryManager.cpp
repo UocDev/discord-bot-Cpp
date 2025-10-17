@@ -4,6 +4,8 @@
 #include <sys/resource.h>
 #include <unistd.h>
 #include <cstdlib>
+#include <csignal>
+#include <unistd.h>
 
 MemoryManager::MemoryManager(size_t limit) : limit_mb(limit) {}
 

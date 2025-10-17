@@ -6,7 +6,7 @@
 #include "memoryManager.hpp"
 
 int main() {
-    MemoryManager memory(70);
+    MemoryManager memory(43);
     memory.start();
 
     auto token = read_token_file("token.txt");
