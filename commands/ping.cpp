@@ -9,7 +9,7 @@ std::string format_latency(double ms) {
     return out.str();
 }
 
-void register_status_command(dpp::cluster& bot) {
+void register_ping_command(dpp::cluster& bot) {
     dpp::slashcommand cmd("ping", "Check bot connection latency", bot.me.id);
     bot.global_command_create(cmd);
 
