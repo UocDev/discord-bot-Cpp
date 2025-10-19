@@ -1,3 +1,6 @@
 [submodule "DPP"]
 	path = DPP
 	url = https://github.com/brainboxdotcc/DPP
+[submodule "mlspp"]
+	path = mlspp
+	url = https://github.com/cisco/mlspp
