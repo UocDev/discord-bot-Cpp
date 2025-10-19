@@ -30,7 +30,7 @@ find_path(JSON_INCLUDE_DIRS "nlohmann/json.hpp"
 
 # MLS++ (End-to-End encryption)
 find_library(MLS_LIB mlspp HINTS /usr/local/lib)
-find_path(MLS_INCLUDE_DIRS "mls/common.h"
+find_path(MLS_INCLUDE_DIRS "mlspp/common.h"
     HINTS /usr/local/include /usr/include
 )
 
@@ -42,7 +42,7 @@ include_directories(
     ${OPUS_INCLUDE_DIRS}
     ${SODIUM_INCLUDE_DIRS}
     ${JSON_INCLUDE_DIRS}
-    ${MLS_INCLUDE_DIRS}
+    ${MLSPP_INCLUDE_DIRS}
 )
 
 link_directories(
@@ -67,7 +67,7 @@ target_link_libraries(bot
     dpp::dpp
     ${OPUS_LIBRARIES}
     ${SODIUM_LIBRARIES}
-    ${MLS_LIB}
+    ${MLSPP_LIB}
 )
 
 # =========================================================
