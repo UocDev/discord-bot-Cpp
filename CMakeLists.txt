@@ -6,95 +6,65 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_COMPILER_LAUNCHER ccache)
 
 include(FetchContent)
-include(FindPkgConfig)
 
 # =========================================================
-# DEPENDENCIES (auto-download jika tidak ditemukan)
+# FETCH
 # =========================================================
+# nlohmann JSON
+FetchContent_Declare(
+  nlohmann_json
+  GIT_REPOSITORY https://github.com/nlohmann/json.git
+  GIT_TAG v3.11.3
+)
+FetchContent_MakeAvailable(nlohmann_json)
 
-# DPP
-find_package(dpp QUIET CONFIG)
-if (NOT dpp_FOUND)
-    message(STATUS "Downloading DPP...")
-    FetchContent_Declare(
-        dpp
-        GIT_REPOSITORY https://github.com/brainboxdotcc/DPP.git
-        GIT_TAG master
-    )
-    FetchContent_MakeAvailable(dpp)
-endif()
+# DPP (Discord++)
+FetchContent_Declare(
+  dpp
+  GIT_REPOSITORY https://github.com/brainboxdotcc/DPP.git
+  GIT_TAG master
+)
+FetchContent_MakeAvailable(dpp)
 
-# Opus
-pkg_check_modules(OPUS QUIET opus)
-if (NOT OPUS_FOUND)
-    message(STATUS "Downloading libopus...")
-    FetchContent_Declare(
-        opus
-        GIT_REPOSITORY https://github.com/xiph/opus.git
-        GIT_TAG main
-    )
-    FetchContent_MakeAvailable(opus)
-endif()
+# libsodium
+FetchContent_Declare(
+  sodium
+  GIT_REPOSITORY https://github.com/jedisct1/libsodium.git
+  GIT_TAG stable
+)
+FetchContent_MakeAvailable(sodium)
 
-# Sodium
-find_library(SODIUM_LIB sodium)
-find_path(SODIUM_INCLUDE sodium.h)
-if (NOT SODIUM_LIB OR NOT SODIUM_INCLUDE)
-    message(STATUS "Downloading libsodium...")
-    FetchContent_Declare(
-        sodium
-        GIT_REPOSITORY https://github.com/jedisct1/libsodium.git
-        GIT_TAG stable
-    )
-    FetchContent_MakeAvailable(sodium)
-endif()
-
-# JSON for Modern C++
-find_path(JSON_INCLUDE_DIR nlohmann/json.hpp)
-if (NOT JSON_INCLUDE_DIR)
-    message(STATUS "Downloading nlohmann/json...")
-    FetchContent_Declare(
-        nlohmann_json
-        GIT_REPOSITORY https://github.com/nlohmann/json.git
-        GIT_TAG develop
-    )
-    FetchContent_MakeAvailable(nlohmann_json)
-    set(JSON_INCLUDE_DIR ${nlohmann_json_SOURCE_DIR}/include)
-endif()
+# libopus
+FetchContent_Declare(
+  opus
+  GIT_REPOSITORY https://github.com/xiph/opus.git
+  GIT_TAG v1.5.2
+)
+FetchContent_MakeAvailable(opus)
 
 # MLS++
-find_library(MLS_LIB mlspp)
-find_path(MLS_INCLUDE_DIR mlspp PATHS /usr/local/include)
-if (NOT MLS_LIB OR NOT MLS_INCLUDE_DIR)
-    message(STATUS "Downloading MLS++...")
-    FetchContent_Declare(
-        mlspp
-        GIT_REPOSITORY https://github.com/cisco/mlspp.git
-        GIT_TAG main
-    )
-    FetchContent_MakeAvailable(mlspp)
-    set(MLS_INCLUDE_DIR ${mlspp_SOURCE_DIR}/include)
-    set(MLS_LIB mlspp)
-endif()
+FetchContent_Declare(
+  mlspp
+  GIT_REPOSITORY https://github.com/cisco/mlspp.git
+  GIT_TAG main
+)
+FetchContent_MakeAvailable(mlspp)
 
 # =========================================================
 # INCLUDE PATHS
 # =========================================================
 include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${OPUS_INCLUDE_DIRS}
-    ${SODIUM_INCLUDE}
-    ${JSON_INCLUDE_DIR}
-    ${MLS_INCLUDE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${nlohmann_json_SOURCE_DIR}/include
+  ${opus_SOURCE_DIR}/include
+  ${sodium_SOURCE_DIR}/src/libsodium/include
+  ${mlspp_SOURCE_DIR}/include
 )
 
-# =========================================================
-# SOURCES
-# =========================================================
 file(GLOB COMMAND_SOURCES "commands/*.cpp")
 
 # =========================================================
-# EXECUTABLES
+# BOT EXECUTABLE
 # =========================================================
 add_executable(bot
     main.cpp
@@ -103,6 +73,16 @@ add_executable(bot
     ${COMMAND_SOURCES}
 )
 
+target_link_libraries(bot
+    PRIVATE
+    dpp::dpp
+    nlohmann_json::nlohmann_json
+    ${OPUS_LIBRARIES}
+)
+
+# =========================================================
+# DEPLOY EXECUTABLE
+# =========================================================
 add_executable(deploy
     memoryManager.cpp
     deploy.cpp
@@ -110,11 +90,12 @@ add_executable(deploy
     ${COMMAND_SOURCES}
 )
 
-# =========================================================
-# LINK LIBRARIES
-# =========================================================
-target_link_libraries(bot PRIVATE dpp::dpp ${OPUS_LIBRARIES} ${SODIUM_LIB} ${MLS_LIB})
-target_link_libraries(deploy PRIVATE dpp::dpp ${OPUS_LIBRARIES} ${SODIUM_LIB} ${MLS_LIB})
+target_link_libraries(deploy
+    PRIVATE
+    dpp::dpp
+    nlohmann_json::nlohmann_json
+    ${OPUS_LIBRARIES}
+)
 
 # =========================================================
 # OPTIONAL INSTALL
