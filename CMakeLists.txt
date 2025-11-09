@@ -18,6 +18,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(nlohmann_json)
 
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${nlohmann_json_SOURCE_DIR}")
+
 # DPP (Discord++)
 FetchContent_Declare(
   dpp
